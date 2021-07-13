@@ -25,6 +25,7 @@ public class TempEntityTest {
     {
         tempRepository.save(new TempEntity("name", "password"));
         Optional<TempEntity> byId = tempRepository.findById(1L);
+        
         Assertions.assertNotNull(byId);
     }
 }
