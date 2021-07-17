@@ -1,8 +1,8 @@
 spring:
   datasource:
-    username: 유저네임입력[로컬]
-    password: 비밀번호입력[로컬]
-    url: jdbc:mysql://localhost:3306/[데이터베이스이름입력]?useSSL=false&serverTimezone=Asia/Seoul
+    username: root
+    password: root1234
+    url: jdbc:mysql://localhost:3306/elct?useSSL=false&serverTimezone=Asia/Seoul
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -14,3 +14,8 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: create
+
+jwt:
+  header: Authorization
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  token-validity-in-seconds: 86400
