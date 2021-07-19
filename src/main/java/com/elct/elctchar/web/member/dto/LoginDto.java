@@ -18,3 +18,6 @@ public class LoginDto {
     @Size(min = 3, max = 100, message = "비밀번호는 3글자 이상이어야 합니다.")
     private String password;
 }
+
+
+

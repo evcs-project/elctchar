@@ -1,6 +1,7 @@
 package com.elct.elctchar.web.member.domain;
 
 import com.elct.elctchar.web.auth.Authority;
+import com.elct.elctchar.web.review.domain.Review;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.*;
@@ -28,6 +31,11 @@ public class Member {
 
     @Column(name = "nickname", length = 50)
     private String nickname;
+
+    @OneToMany(mappedBy = "member")
+    List<Review> reviewList = new ArrayList<>();
+
+
 
     @ManyToMany
     @JoinTable(
@@ -62,5 +70,4 @@ public class Member {
 
         this.password = newPassword;
     }
-
 }

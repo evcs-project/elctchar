@@ -11,8 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 
 /**
  * 단위 테스트든 통합테스트를 먼저 같은 파일에 작성하고 나중에 분리

@@ -1,4 +1,4 @@
-package com.elct.elctchar.web.station.domain;
+package com.elct.elctchar.web.station.domain.cptype;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
