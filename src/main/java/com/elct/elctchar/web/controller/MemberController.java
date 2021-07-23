@@ -13,7 +13,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping
-    public Long createMember(MemberCreateRequestDto requestDto)
+    public Long createMember(@RequestBody MemberCreateRequestDto requestDto)
     {
         Member member = memberService.createMember(requestDto.getUsername(), requestDto.getPassword());
         return member.getMemberId();

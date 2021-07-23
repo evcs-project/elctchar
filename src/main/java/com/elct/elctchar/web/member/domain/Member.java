@@ -1,6 +1,7 @@
 package com.elct.elctchar.web.member.domain;
 
 import com.elct.elctchar.web.auth.Authority;
+import com.elct.elctchar.web.common.BaseEntity;
 import com.elct.elctchar.web.review.domain.Review;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,7 +21,7 @@ import static javax.persistence.GenerationType.*;
 @Getter
 @Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity {
     @Id
     @Column(name = "member_id")
     @GeneratedValue(strategy = IDENTITY)
@@ -29,13 +30,11 @@ public class Member {
     @Column(name = "password", length = 80)
     private String password;
 
-    @Column(name = "nickname", length = 50)
+    @Column(name = "nickname", length = 50, unique = true)
     private String nickname;
 
     @OneToMany(mappedBy = "member")
     List<Review> reviewList = new ArrayList<>();
-
-
 
     @ManyToMany
     @JoinTable(

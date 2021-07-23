@@ -1,9 +1,11 @@
 package com.elct.elctchar.web.station.domain;
 
+import com.elct.elctchar.web.common.BaseEntity;
 import com.elct.elctchar.web.review.domain.Review;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,20 +14,19 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Table(name = "station")
 @Getter
+@Setter
 @Entity
-public class Station {
+public class Station extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "station_id")
-    private Long stationId;
+    @Column(name = "cs_id")
+    private String csId;
+
     private String addr;
 
     @Column(unique = true)
-    private String csId;
-    @Column(unique = true)
     private String csNm;
     private Double lat;
-    private Double longi;
+    private Double lng;
 
     @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
     List<Review> reviewList=new ArrayList<>();
@@ -33,7 +34,4 @@ public class Station {
     @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
     List<Charger> chargerList=new ArrayList<>();
 
-    public void setCsId(String csId) {
-        this.csId = csId;
-    }
 }

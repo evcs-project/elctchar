@@ -1,4 +1,4 @@
-package com.elct.elctchar.web.review;
+package com.elct.elctchar.web.station;
 
 import com.elct.elctchar.web.station.domain.Charger;
 import com.elct.elctchar.web.station.domain.ChargerRepository;
@@ -25,9 +25,9 @@ public class StationTest {
     @Autowired
     private ChargerRepository chargerRepository;
 
-
     @BeforeEach
-    void init() {
+    void init()
+    {
         Station station = stationRepository.save(new Station());
         String csId = "CsId";
         station.setCsId(csId);
@@ -48,7 +48,6 @@ public class StationTest {
     }
 
     @Test
-    @Commit
     @DisplayName("충전소를 삭제하면 충전기 전체삭제되어야된다.")
     void deleteStationTest()
     {
@@ -64,7 +63,16 @@ public class StationTest {
         Assertions.assertThat(station.getStationId()).isNotNull();
         chargerRepository.deleteAll(station.getChargerList());
         Station stationByCsId = stationRepository.findStationByCsId(csId);
+    }
 
-//        Assertions.assertThat(stationByCsId).isNull();
+    @Test
+    @DisplayName("충전소 생성 테스트")
+    void createStationTest()
+    {
+        Station station = new Station();
+        station.setCsId("CC");
+
+        Station save = stationRepository.save(station);
+        Assertions.assertThat(save.getStationId()).isNotNull();
     }
 }

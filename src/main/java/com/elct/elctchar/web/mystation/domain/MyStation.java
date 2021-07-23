@@ -17,8 +17,8 @@ public class MyStation {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "station_id")
-    private Station stationId;
+    @JoinColumn(name = "cs_id")
+    private Station csId;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)

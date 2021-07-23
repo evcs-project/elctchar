@@ -11,5 +11,5 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class MyStationId implements Serializable {
     private Long memberId;
-    private Long stationId;
+    private String csId;
 }

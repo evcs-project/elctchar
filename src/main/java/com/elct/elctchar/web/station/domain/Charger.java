@@ -1,5 +1,6 @@
 package com.elct.elctchar.web.station.domain;
 
+import com.elct.elctchar.web.common.BaseEntity;
 import com.elct.elctchar.web.station.domain.cptype.ChargeTp;
 import com.elct.elctchar.web.station.domain.cptype.CpStat;
 import com.elct.elctchar.web.station.domain.cptype.CpTp;
@@ -14,12 +15,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Table(name = "charger")
 @Entity
-public class Charger {
+public class Charger extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cp_id")
-    private Long cpId;
+    @Column(name = "charger_id")
+    private Long chargerId;
 
+    @Column(name = "cp_id")
+    private String cpId;
     @Column(name = "cp_nm")
     private String cpNm;
 
@@ -39,7 +42,7 @@ public class Charger {
     private LocalDateTime statUpdateDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "station_id")
+    @JoinColumn(name = "cs_id")
     private Station station;
 
     public void addStation(Station station)

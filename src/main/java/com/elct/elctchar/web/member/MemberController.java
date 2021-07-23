@@ -18,5 +18,6 @@ public class MemberController {
     {
         memberService.deleteMember(memberId);
     }
-
+// 리뷰 사용자 아이디 조회
+    // 리뷰 사용자아이디로 생성
 }
