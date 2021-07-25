@@ -30,8 +30,8 @@ spring:
   profiles:
     active: live
   datasource:
-    username: back_master
-    password: jaavaaback12
+    username: 
+    password:
     url: jdbc:mysql://rds-master.ciclmc7wjq3o.ap-northeast-2.rds.amazonaws.com:3306/elct
     driver-class-name: org.mariadb.jdbc.Driver
 
