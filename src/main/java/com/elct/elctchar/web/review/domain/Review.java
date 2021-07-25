@@ -29,7 +29,7 @@ public class Review extends BaseEntity {
     @Column(name = "title")
     private String title;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cs_id")
     private Station station;
 
@@ -37,9 +37,10 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private Review(String content)
+    private Review(String content,String title)
     {
         this.content = content;
+        this.title=title;
     }
 
     public void setContent(String content)
@@ -47,10 +48,12 @@ public class Review extends BaseEntity {
         this.content = content;
     }
 
-    public static Review creteReview(String content)
+    public static Review creteReview(String content,String title)
     {
-        return new Review(content);
+        return new Review(content,title);
     }
+
+
 
     public void setMember(Member member)
     {

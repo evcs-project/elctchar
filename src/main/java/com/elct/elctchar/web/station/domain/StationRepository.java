@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface StationRepository extends JpaRepository<Station, Long> {
     @Query("select s from Station s where s.csId =:csId")
-    Station findStationByCsId(String csId);
+    Optional<Station> findStationByCsId(String csId);
 }

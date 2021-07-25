@@ -13,7 +13,8 @@ public enum ErrorCode {
     , NONE_DATA("없는 데이터입니다.")
     , LOGIC_ERROR("로직 에러")
     , PASSWORD_EQUAL_ERROR("비밀번호가 같음")
-    , NONE_USER("없는 유저입니다.");
+    , NONE_USER("없는 유저입니다.")
+    , DUPLICATE_USER("이미 존재하는 회원입니다.");
 
     private final String name;
 }

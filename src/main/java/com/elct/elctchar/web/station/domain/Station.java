@@ -34,4 +34,11 @@ public class Station extends BaseEntity {
     @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
     List<Charger> chargerList=new ArrayList<>();
 
+    public Station(String csId, String addr, String csNm, Double lat, Double lng) {
+        this.csId = csId;
+        this.addr = addr;
+        this.csNm = csNm;
+        this.lat = lat;
+        this.lng = lng;
+    }
 }
