@@ -1,4 +1,8 @@
+
+---
 spring:
+  profiles:
+    active: local
   datasource:
     username: root
     password: root1234
@@ -19,3 +23,30 @@ jwt:
   header: Authorization
   secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
   token-validity-in-seconds: 86400
+
+---
+
+spring:
+  profiles:
+    active: live
+  datasource:
+    username: back_master
+    password: jaavaaback12
+    url: jdbc:mysql://rds-master.ciclmc7wjq3o.ap-northeast-2.rds.amazonaws.com:3306/elct
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    database: MYSQL
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: none
+
+jwt:
+  header: Authorization
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  token-validity-in-seconds: 86400
+

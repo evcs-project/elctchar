@@ -39,6 +39,8 @@ dependencies {
 
     implementation 'org.apache.commons:commons-lang3:3.10'
     implementation("com.google.guava:guava:29.0-jre")
+    implementation("org.mariadb.jdbc:mariadb-java-client:2.1.2")
+
 }
 
 test {
