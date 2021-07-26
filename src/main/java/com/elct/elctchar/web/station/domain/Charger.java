@@ -7,6 +7,7 @@ import com.elct.elctchar.web.station.domain.cptype.CpTp;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Table(name = "charger")
 @Entity
+@ToString(exclude = {"station"})
 public class Charger extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

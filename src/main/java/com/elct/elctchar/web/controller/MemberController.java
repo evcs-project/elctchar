@@ -1,4 +1,4 @@
-package com.elct.elctchar.web.member.controller;
+package com.elct.elctchar.web.controller;
 
 import com.elct.elctchar.web.member.domain.Member;
 import com.elct.elctchar.web.member.dto.MemberCreateRequestDto;

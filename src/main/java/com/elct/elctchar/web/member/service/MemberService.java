@@ -5,6 +5,7 @@ import com.elct.elctchar.web.exception.GlobalApiException;
 import com.elct.elctchar.web.member.domain.Member;
 import com.elct.elctchar.web.member.domain.MemberRepository;
 import com.elct.elctchar.web.mystation.domain.MyStation;
+import com.elct.elctchar.web.mystation.domain.MyStationRepository;
 import com.elct.elctchar.web.station.domain.Station;
 import com.elct.elctchar.web.station.domain.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,15 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final StationRepository stationRepository;
-
+    private final MyStationRepository myStationRepository;
     @Autowired
     public MemberService(
             MemberRepository memberRepository
-            , PasswordEncoder passwordEncoder, StationRepository stationRepository) {
+            , PasswordEncoder passwordEncoder, StationRepository stationRepository, MyStationRepository myStationRepository) {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
         this.stationRepository = stationRepository;
+        this.myStationRepository = myStationRepository;
     }
 
     @Transactional
@@ -72,7 +74,7 @@ public class MemberService {
     }
 
     @Transactional
-    public void addStation(Long memberId, String csId)
+    public MyStation addStation(Long memberId, String csId)
     {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(()-> new GlobalApiException(ErrorCode.NONE_USER));
@@ -83,6 +85,9 @@ public class MemberService {
         MyStation myStation = new MyStation();
         myStation.setMemberId(member);
         myStation.setCsId(station);
+        myStationRepository.save(myStation);
+
+        return myStation;
 
     }
 }

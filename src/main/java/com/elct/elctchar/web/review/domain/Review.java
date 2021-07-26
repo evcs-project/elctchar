@@ -6,11 +6,8 @@ import com.elct.elctchar.web.station.domain.Station;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -37,7 +34,7 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private Review(String content,String title)
+    private Review(String content, String title)
     {
         this.content = content;
         this.title=title;

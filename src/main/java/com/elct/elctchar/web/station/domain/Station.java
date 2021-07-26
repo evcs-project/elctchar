@@ -2,10 +2,7 @@ package com.elct.elctchar.web.station.domain;
 
 import com.elct.elctchar.web.common.BaseEntity;
 import com.elct.elctchar.web.review.domain.Review;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,7 +13,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@ToString(exclude = {"chargerList", "reviewList"})
 public class Station extends BaseEntity {
+
     @Id
     @Column(name = "cs_id")
     private String csId;
@@ -28,17 +27,23 @@ public class Station extends BaseEntity {
     private Double lat;
     private Double lng;
 
-    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Review> reviewList=new ArrayList<>();
 
-    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Charger> chargerList=new ArrayList<>();
 
-    public Station(String csId, String addr, String csNm, Double lat, Double lng) {
+    private Station(String csId, String addr, String csNm, Double lat, Double lng) {
         this.csId = csId;
         this.addr = addr;
         this.csNm = csNm;
         this.lat = lat;
         this.lng = lng;
     }
+
+    public static Station createStation(String csId, String addr, String csNm, Double lat, Double lng)
+    {
+        return new Station(csId, addr, csNm, lat, lng);
+    }
+
 }

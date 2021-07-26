@@ -1,4 +1,4 @@
-package com.elct.elctchar.web.review.controller;
+package com.elct.elctchar.web.controller;
 
 import com.elct.elctchar.web.review.domain.ReviewRepository;
 import com.elct.elctchar.web.review.dto.ReviewDto;
@@ -6,14 +6,13 @@ import com.elct.elctchar.web.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// TODO  : Rest controller 전환
 @Controller
+@RequestMapping("/review")
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewService reviewService;
