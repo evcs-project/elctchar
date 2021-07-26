@@ -4,6 +4,7 @@ import com.elct.elctchar.web.station.dto.StationSearchRequestDto;
 import com.elct.elctchar.web.station.dto.StationSearchResponseDto;
 import com.elct.elctchar.web.station.service.StationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -17,7 +18,7 @@ public class StationController {
     private final StationService stationService;
 
     @GetMapping("/search")
-    public StationSearchResponseDto searchStation(StationSearchRequestDto requestDto)
+    public StationSearchResponseDto searchStation(@Validated StationSearchRequestDto requestDto)
     {
         return stationService.searchStation(requestDto);
     }
