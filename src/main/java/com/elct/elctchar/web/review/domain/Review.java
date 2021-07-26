@@ -53,7 +53,10 @@ public class Review extends BaseEntity {
         return new Review(content,title);
     }
 
-
+    public void updateReview(String title,String content){
+        this.title=title;
+        this.content=content;
+    }
 
     public void setMember(Member member)
     {
