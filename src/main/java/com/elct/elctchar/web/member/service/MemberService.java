@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class MemberService {
 
@@ -28,11 +30,12 @@ public class MemberService {
         this.stationRepository = stationRepository;
     }
 
-    public Member createMember(String username, String password)
+    @Transactional
+    public Member createMember(String nickName, String password)
     {
+        checkDuplicateMember(nickName);
         String encodedPassword = passwordEncoder.encode(password);
-        Member member = Member.newMember(encodedPassword, username);
-
+        Member member = Member.newMember(encodedPassword, nickName);
         return memberRepository.save(member);
     }
 
@@ -44,21 +47,28 @@ public class MemberService {
         memberRepository.delete(member);
     }
 
-    public void changePassword(Long memberId, String currentPassword, String newPassword)
+    public void changePassword(Long memberId, String newPassword)
     {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new GlobalApiException(ErrorCode.NONE_DATA));
 
         String encodedNewPassword = passwordEncoder.encode(newPassword);
 
+        if (passwordEncoder.matches(newPassword, member.getPassword()))
+        {
+            throw new GlobalApiException(ErrorCode.PASSWORD_EQUAL_ERROR);
+        }
         member.changePassword(member.getPassword(), encodedNewPassword);
 
     }
 
     public void checkDuplicateMember(String nickName)
     {
-        memberRepository.findMemberByNickname(nickName)
-                .orElseThrow(()-> new GlobalApiException(ErrorCode.DUPLICATE_USER));
+        Optional<Member> memberByNickname = memberRepository.findMemberByNickname(nickName);
+        if (memberByNickname.isPresent())
+        {
+            throw new GlobalApiException(ErrorCode.DUPLICATE_USER);
+        }
     }
 
     @Transactional

@@ -19,6 +19,7 @@ import static javax.persistence.GenerationType.*;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {

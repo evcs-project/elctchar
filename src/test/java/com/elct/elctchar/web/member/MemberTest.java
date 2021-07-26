@@ -1,20 +1,20 @@
 package com.elct.elctchar.web.member;
 
+import com.elct.elctchar.web.exception.GlobalApiException;
 import com.elct.elctchar.web.member.domain.Member;
 import com.elct.elctchar.web.member.domain.MemberRepository;
 import com.elct.elctchar.web.member.service.MemberService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.junit.jupiter.api.Assertions;
 
-/**
- * 단위 테스트든 통합테스트를 먼저 같은 파일에 작성하고 나중에 분리
- */
+
 @SpringBootTest
 @Transactional
 public class MemberTest {
@@ -34,28 +34,48 @@ public class MemberTest {
     {
         Member member = memberService.createMember("user1", "pwd1");
         String newPassword = "pwd2";
-        memberService.changePassword(member.getMemberId(), member.getPassword(), newPassword);
+        memberService.changePassword(member.getMemberId(), newPassword);
         Member findMember = memberRepository.findById(member.getMemberId()).get();
-        Assertions.assertThat(passwordEncoder.matches(newPassword, findMember.getPassword())).isTrue();
+        Assertions.assertTrue(passwordEncoder.matches(newPassword, findMember.getPassword()));
     }
 
     @Test
-    @DisplayName("비밀번호 변경시에 이전 비밀번호와 같으면 에러")
+    @DisplayName("동일한 비밀번호로 변경 시 오류 테스트")
     void equalPasswordErrorTest()
     {
         Member member = memberService.createMember("user1", "pwd1");
-        Assertions.assertThatThrownBy(() -> {
-            memberService.changePassword(member.getMemberId(), member.getPassword(), "pwd1");
-        }).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThrows(GlobalApiException.class, () ->
+        {
+            memberService.changePassword(member.getMemberId(), "pwd1");
+        });
     }
 
     @Test
-    @DisplayName("회원가입 등록")
+    @DisplayName("중복된 회원 가입 테스트")
     void createMemberTest()
     {
-        Member member = memberService.createMember("username", "password");
-        Member newMember = memberRepository.findById(member.getMemberId()).get();
+        memberService.createMember("user3", "password");
 
-        Assertions.assertThat(newMember.getMemberId()).isNotNull();
+        Assertions.assertThrows(GlobalApiException.class, ()-> {
+            memberService.createMember("user3", "password");
+        });
+    }
+
+    @Test
+    @DisplayName("멤버 ID 로 삭제 테스트")
+    void deleteMemberTest() {
+        Member member = memberService.createMember("user1", "pwd1");
+        memberRepository.delete(member);
+    }
+
+    @Test
+    @DisplayName("중복된 회원 체크 테스트")
+    void equalNicknameErrorTest()
+    {
+        memberService.createMember("user3", "pwd1");
+
+        Assertions.assertThrows(GlobalApiException.class, ()-> {
+            memberService.checkDuplicateMember("user3");}
+        );
     }
 }

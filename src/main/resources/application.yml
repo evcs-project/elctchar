@@ -1,8 +1,10 @@
-
----
 spring:
   profiles:
     active: local
+
+---
+spring:
+  profiles: local
   datasource:
     username: root
     password: root1234
@@ -12,7 +14,7 @@ spring:
   jpa:
     generate-ddl: true
     show-sql: true
-    database: mysql
+    database: MYSQL
     properties:
       hibernate:
         format_sql: true
@@ -27,8 +29,7 @@ jwt:
 ---
 
 spring:
-  profiles:
-    active: live
+  profiles: live
   datasource:
     username:
     password:
