@@ -1,10 +1,10 @@
 package com.elct.elctchar.web.station.dto;
 
 import com.elct.elctchar.web.station.domain.cptype.ChargeTp;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
@@ -13,8 +13,12 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Builder
 public class StationSearchRequestDto {
-    @NotBlank(message = "검색어를 입력해주세요.")
-    private String search;
 
+    @NotBlank(message = "충전소 이름을 입력해주세요.")
+    @ApiModelProperty(value = "충전소 이름")
+    private String csNm;
+
+    @NotNull(message = "충전기 타입을 입력해주세요.")
+    @ApiModelProperty(value = "충전기 타입")
     private ChargeTp chargeTp;
 }

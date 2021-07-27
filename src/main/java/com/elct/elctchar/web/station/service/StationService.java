@@ -42,7 +42,7 @@ public class StationService {
     public StationSearchResponseDto searchStation(StationSearchRequestDto requestDto)
     {
         List<Station> stations = stationRepository.findChargerBySearchReqeustDto(
-                requestDto.getSearch(),
+                requestDto.getCsNm(),
                 requestDto.getChargeTp()
         );
 

@@ -1,13 +1,15 @@
-package com.elct.elctchar.web.auth;
+package com.elct.elctchar.web.controller;
 
 import com.elct.elctchar.config.jwt.JwtFilter;
 import com.elct.elctchar.config.jwt.TokenProvider;
+import com.elct.elctchar.web.auth.UserInfoResponseDto;
 import com.elct.elctchar.web.exception.ErrorCode;
 import com.elct.elctchar.web.exception.GlobalApiException;
 import com.elct.elctchar.web.member.domain.Member;
 import com.elct.elctchar.web.member.domain.MemberRepository;
 import com.elct.elctchar.web.member.dto.LoginDto;
 import com.elct.elctchar.web.member.dto.TokenDto;
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,6 +27,7 @@ import javax.validation.Valid;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/auth")
+@Api(tags = "로그인 관련 Api")
 public class AuthController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -38,8 +42,9 @@ public class AuthController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
-
+    public ResponseEntity<TokenDto> authorize(@Validated @RequestBody LoginDto loginDto) {
+        System.out.println(loginDto.getNickName());
+        System.out.println(loginDto.getPassword());
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getNickName(), loginDto.getPassword());
 

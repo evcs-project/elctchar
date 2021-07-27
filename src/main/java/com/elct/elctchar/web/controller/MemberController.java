@@ -3,11 +3,13 @@ package com.elct.elctchar.web.controller;
 import com.elct.elctchar.web.member.domain.Member;
 import com.elct.elctchar.web.member.dto.MemberCreateRequestDto;
 import com.elct.elctchar.web.member.service.MemberService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/member")
+@Api(tags = "멤버 관련 Api")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;

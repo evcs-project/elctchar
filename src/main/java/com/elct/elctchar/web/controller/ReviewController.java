@@ -1,48 +1,32 @@
 package com.elct.elctchar.web.controller;
 
-import com.elct.elctchar.web.review.domain.ReviewRepository;
-import com.elct.elctchar.web.review.dto.ReviewDto;
+import com.elct.elctchar.web.review.dto.StaionReviewAddResponseDto;
+import com.elct.elctchar.web.review.dto.StationReviewAddRequestDto;
 import com.elct.elctchar.web.review.service.ReviewService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-// TODO  : Rest controller 전환
-@Controller
-@RequestMapping("/review")
+@RestController
+@RequestMapping("/api/review")
+@Api(tags = "리뷰 관련 Api")
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewService reviewService;
 
-    @GetMapping("/myreview")
-    public String myreview(Long id, Model model){
-        List<ReviewDto> reviewDtoList = reviewService.findmemberreview(id);
-        model.addAttribute("reviewlist",reviewDtoList);
-        return "myreview";
-    }
-    @GetMapping("/stationreview")
-    public String stationreview(String CsId,Model model){
-        List<ReviewDto> reviewDtoList = reviewService.findstationreview(CsId);
-        model.addAttribute("reviewlist",reviewDtoList);
-        return "station";
-    }
-    @PostMapping("/registreview")
-    public String registereview(String CsId,String nickname,String title,String content){
-        reviewService.createreview(nickname,CsId,title,content);
-        return "/";
-    }
-    @PutMapping("/updatereview")
-    public String updatereview(Long id,String title,String content){
-        reviewService.updatereview(id,title,content);
-        return "/";
-    }
-    @DeleteMapping("/deletereview")
-    public String deletereview(Long id){
-        reviewService.deletereview(id);
-        return "/";
+    @ApiOperation("특정 충전소의 리뷰 리스트 가져오기")
+    @GetMapping("/station/{csId}")
+    public StaionReviewAddResponseDto getStationReviewsByCsId(@PathVariable(value = "csId") String csID)
+    {
+        return reviewService.findStationReviewByCsId(csID);
     }
 
+    @ApiOperation("리뷰 쓰기")
+    @PostMapping
+    public void addReview(@RequestBody @Validated StationReviewAddRequestDto requestDto)
+    {
+        reviewService.addReview(requestDto);
+    }
 }

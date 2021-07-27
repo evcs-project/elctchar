@@ -11,7 +11,6 @@ import com.elct.elctchar.web.station.domain.ChargerRepository;
 import com.elct.elctchar.web.station.domain.Station;
 import com.elct.elctchar.web.station.domain.StationRepository;
 import com.elct.elctchar.web.station.domain.cptype.ChargeTp;
-import com.elct.elctchar.web.station.dto.StationDto;
 import com.elct.elctchar.web.station.dto.StationSearchRequestDto;
 import com.elct.elctchar.web.station.dto.StationSearchResponseDto;
 import com.elct.elctchar.web.station.service.StationService;
@@ -105,7 +104,7 @@ public class StationTest {
     void searchStationTest()
     {
         StationSearchRequestDto requestDto = StationSearchRequestDto.builder()
-                .search("cs_nm")
+                .csNm("cs_nm")
                 .chargeTp(ChargeTp.STANDARD_CHARGE)
                 .build();
 
