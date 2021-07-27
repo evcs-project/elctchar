@@ -31,8 +31,8 @@ jwt:
 spring:
   profiles: live
   datasource:
-    username:
-    password:
+    username: back_master
+    password: springboook11
     url: jdbc:mysql://rds-master.ciclmc7wjq3o.ap-northeast-2.rds.amazonaws.com:3306/elct
     driver-class-name: org.mariadb.jdbc.Driver
 
