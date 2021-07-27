@@ -1,7 +1,6 @@
 package com.elct.elctchar.web.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.graalvm.compiler.serviceprovider.IsolateUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
