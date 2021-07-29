@@ -29,9 +29,11 @@ import javax.validation.Valid;
 @RequestMapping("/api/auth")
 @Api(tags = "로그인 관련 Api")
 public class AuthController {
+
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final MemberRepository memberRepository;
+
     public AuthController(
             TokenProvider tokenProvider
             , AuthenticationManagerBuilder authenticationManagerBuilder
@@ -67,7 +69,7 @@ public class AuthController {
                 .orElseThrow(
                         ()->  new GlobalApiException(ErrorCode.NONE_USER)
                 );
-        return new UserInfoResponseDto(userDetails.getUsername(), member.getNickname(), member.getAuthorities());
+        return new UserInfoResponseDto(member.getMemberId(), member.getNickname(), member.getAuthorities());
     }
 
 }

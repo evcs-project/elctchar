@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,6 +49,7 @@ public class StationService {
 
         List<StationDto> dtos = stations.stream()
                 .map(StationDto::toDto)
+                .distinct()
                 .collect(Collectors.toList());
 
         return new StationSearchResponseDto(dtos);

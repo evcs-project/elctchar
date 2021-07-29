@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@EqualsAndHashCode(of = "csId")
 public class StationDto {
     private String csId;
     private String addr;

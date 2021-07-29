@@ -2,12 +2,14 @@ package com.elct.elctchar.web.station.domain.cptype;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * 충전 방식
  */
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public enum CpTp {
     B_TYPE("B타입(5핀)"),
     C_TYPE("C타입(5핀)"),

@@ -12,7 +12,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -42,22 +41,22 @@ public class ReviewTest {
         stationRepository.save(station);
         Member member = Member.newMember("1234", "qwer1234");
         memberRepository.save(member);
-        Long createreview = reviewService.createreview(member.getNickname(), station.getCsId(), "firstreviewtitle", "firstreviewcontent");
-        Long secondreviewcontent = reviewService.createreview(member.getNickname(), station.getCsId(), "secondreviewtitle","secondreviewcontent");
-        Long thirdreviewcontent = reviewService.createreview(member.getNickname(), station.getCsId(), "thirdreviewtitle","thirdreviewcontent");
-        Optional<Review> findreview = reviewRepository.findById(createreview);
-        Optional<Station> findstation = stationRepository.findStationByCsId(station.getCsId());
-        Optional<Member> findmember = memberRepository.findById(member.getMemberId());
-        Assertions.assertThat(findstation.get().getReviewList().size()).isEqualTo(3);
-        Assertions.assertThat(findmember.get().getReviewList().size()).isEqualTo(3);
-        for(Review r:findmember.get().getReviewList()){
-            System.out.println("r.getContent() = " + r.getContent());
-            System.out.println("r.getTitle() = " + r.getTitle());
-        }
-        for(Review r:findstation.get().getReviewList()){
-            System.out.println("r.getContent() = " + r.getContent());
-            System.out.println("r.getTitle() = " + r.getTitle());
-        }
+        Long createReview = reviewService.createReview(member.getNickname(), station.getCsId(), "firstreviewtitle", "firstreviewcontent");
+        Long secondReviewContent = reviewService.createReview(member.getNickname(), station.getCsId(), "secondreviewtitle","secondreviewcontent");
+        Long thirdReviewContent = reviewService.createReview(member.getNickname(), station.getCsId(), "thirdreviewtitle","thirdreviewcontent");
+        Optional<Review> findReview = reviewRepository.findById(createReview);
+        Optional<Station> findStation = stationRepository.findStationByCsId(station.getCsId());
+        Optional<Member> findMember = memberRepository.findById(member.getMemberId());
+        Assertions.assertThat(findStation.get().getReviewList().size()).isEqualTo(3);
+        Assertions.assertThat(findMember.get().getReviewList().size()).isEqualTo(3);
+//        for(Review r:findMember.get().getReviewList()){
+//            System.out.println("r.getContent() = " + r.getContent());
+//            System.out.println("r.getTitle() = " + r.getTitle());
+//        }
+//        for(Review r:findStation.get().getReviewList()){
+//            System.out.println("r.getContent() = " + r.getContent());
+//            System.out.println("r.getTitle() = " + r.getTitle());
+//        }
     }
     @Test
     void updateReviewTest()
@@ -67,9 +66,9 @@ public class ReviewTest {
         stationRepository.save(station);
         Member member = Member.newMember("1234", "qwer1234");
         memberRepository.save(member);
-        Long createreview = reviewService.createreview(member.getNickname(), station.getCsId(), "firstreviewtitle", "firstreviewcontent");
-        Long secondreviewcontent = reviewService.createreview(member.getNickname(), station.getCsId(), "secondreviewtitle","secondreviewcontent");
-        Long thirdreviewcontent = reviewService.createreview(member.getNickname(), station.getCsId(), "thirdreviewtitle","thirdreviewcontent");
+        Long createreview = reviewService.createReview(member.getNickname(), station.getCsId(), "firstreviewtitle", "firstreviewcontent");
+        Long secondreviewcontent = reviewService.createReview(member.getNickname(), station.getCsId(), "secondreviewtitle","secondreviewcontent");
+        Long thirdreviewcontent = reviewService.createReview(member.getNickname(), station.getCsId(), "thirdreviewtitle","thirdreviewcontent");
         reviewService.updatereview(secondreviewcontent,"updatesecondtitle","updatesecondcontent");
         Optional<Review> findreview = reviewRepository.findById(createreview);
         Optional<Station> findstation = stationRepository.findStationByCsId(station.getCsId());
@@ -95,9 +94,9 @@ public class ReviewTest {
         stationRepository.save(station);
         Member member = Member.newMember("1234", "qwer1234");
         memberRepository.save(member);
-        Long createreview = reviewService.createreview(member.getNickname(), station.getCsId(), "firstreviewtitle", "firstreviewcontent");
-        Long secondreviewcontent = reviewService.createreview(member.getNickname(), station.getCsId(), "secondreviewtitle","secondreviewcontent");
-        Long thirdreviewcontent = reviewService.createreview(member.getNickname(), station.getCsId(), "thirdreviewtitle","thirdreviewcontent");
+        Long createreview = reviewService.createReview(member.getNickname(), station.getCsId(), "firstreviewtitle", "firstreviewcontent");
+        Long secondreviewcontent = reviewService.createReview(member.getNickname(), station.getCsId(), "secondreviewtitle","secondreviewcontent");
+        Long thirdreviewcontent = reviewService.createReview(member.getNickname(), station.getCsId(), "thirdreviewtitle","thirdreviewcontent");
         Optional<Review> findreview = reviewRepository.findById(createreview);
         Optional<Station> findstation = stationRepository.findStationByCsId(station.getCsId());
         Optional<Member> findmember = memberRepository.findById(member.getMemberId());
@@ -125,9 +124,9 @@ public class ReviewTest {
         stationRepository.save(station);
         Member member = Member.newMember("1234", "qwer1234");
         memberRepository.save(member);
-        Long createreview = reviewService.createreview(member.getNickname(), station.getCsId(), "firstreviewtitle", "firstreviewcontent");
-        Long secondreviewcontent = reviewService.createreview(member.getNickname(), station.getCsId(), "secondreviewtitle","secondreviewcontent");
-        Long thirdreviewcontent = reviewService.createreview(member.getNickname(), station.getCsId(), "thirdreviewtitle","thirdreviewcontent");
+        Long createreview = reviewService.createReview(member.getNickname(), station.getCsId(), "firstreviewtitle", "firstreviewcontent");
+        Long secondreviewcontent = reviewService.createReview(member.getNickname(), station.getCsId(), "secondreviewtitle","secondreviewcontent");
+        Long thirdreviewcontent = reviewService.createReview(member.getNickname(), station.getCsId(), "thirdreviewtitle","thirdreviewcontent");
         Optional<Review> findreview = reviewRepository.findById(createreview);
         Optional<Station> findstation = stationRepository.findStationByCsId(station.getCsId());
         Optional<Member> findmember = memberRepository.findById(member.getMemberId());
@@ -147,9 +146,9 @@ public class ReviewTest {
         stationRepository.save(station);
         Member member = Member.newMember("1234", "qwer1234");
         memberRepository.save(member);
-        Long createreview = reviewService.createreview(member.getNickname(), station.getCsId(), "firstreviewtitle", "firstreviewcontent");
-        Long secondreviewcontent = reviewService.createreview(member.getNickname(), station.getCsId(), "secondreviewtitle","secondreviewcontent");
-        Long thirdreviewcontent = reviewService.createreview(member.getNickname(), station.getCsId(), "thirdreviewtitle","thirdreviewcontent");
+        Long createreview = reviewService.createReview(member.getNickname(), station.getCsId(), "firstreviewtitle", "firstreviewcontent");
+        Long secondreviewcontent = reviewService.createReview(member.getNickname(), station.getCsId(), "secondreviewtitle","secondreviewcontent");
+        Long thirdreviewcontent = reviewService.createReview(member.getNickname(), station.getCsId(), "thirdreviewtitle","thirdreviewcontent");
         Optional<Review> findreview = reviewRepository.findById(createreview);
         Optional<Station> findstation = stationRepository.findStationByCsId(station.getCsId());
         Optional<Member> findmember = memberRepository.findById(member.getMemberId());

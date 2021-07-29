@@ -1,6 +1,5 @@
 package com.elct.elctchar.web.controller;
 
-import com.elct.elctchar.web.review.domain.ReviewRepository;
 import com.elct.elctchar.web.review.dto.ReviewDto;
 import com.elct.elctchar.web.review.service.ReviewService;
 import io.swagger.annotations.Api;
@@ -20,29 +19,38 @@ public class ReviewControllerBefore {
     private final ReviewService reviewService;
 
     @GetMapping("/myreview")
-    public String myreview(Long id, Model model){
+    public String myreview(Long id, Model model)
+    {
         List<ReviewDto> reviewDtoList = reviewService.findmemberreview(id);
         model.addAttribute("reviewlist",reviewDtoList);
         return "myreview";
     }
-    @GetMapping("/stationreview")
-    public String stationreview(String CsId, Model model){
+
+    @GetMapping("/station-review")
+    public String stationreview(String CsId, Model model)
+    {
         List<ReviewDto> reviewDtoList = reviewService.findstationreview(CsId);
         model.addAttribute("reviewlist",reviewDtoList);
         return "station";
     }
-    @PostMapping("/registreview")
-    public String registereview(String CsId,String nickname,String title,String content){
-        reviewService.createreview(nickname,CsId,title,content);
+
+    @PostMapping("/regist-review")
+    public String registereview(String CsId,String nickname,String title,String content)
+    {
+        reviewService.createReview(nickname,CsId,title,content);
         return "/";
     }
+
     @PutMapping("/updatereview")
-    public String updatereview(Long id,String title,String content){
+    public String updatereview(Long id,String title,String content)
+    {
         reviewService.updatereview(id,title,content);
         return "/";
     }
+
     @DeleteMapping("/deletereview")
-    public String deletereview(Long id){
+    public String deletereview(Long id)
+    {
         reviewService.deletereview(id);
         return "/";
     }

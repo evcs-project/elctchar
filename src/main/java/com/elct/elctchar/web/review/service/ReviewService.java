@@ -14,6 +14,7 @@ import com.elct.elctchar.web.station.domain.Station;
 import com.elct.elctchar.web.station.domain.StationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -28,7 +29,8 @@ public class ReviewService {
     private final StationRepository stationRepository;
 
     @Transactional
-    public Long createreview(String nickname,String CsId,String title,String content){
+    public Long createReview(String nickname, String CsId, String title, String content)
+    {
         Station station = stationRepository.findStationByCsId(CsId).get();
         Member member = memberRepository.findMemberByNickname(nickname).get();
         Review review = Review.creteReview(content, title);
@@ -38,57 +40,59 @@ public class ReviewService {
         return review.getReviewId();
     }
 
-    public void updatereview(Long id,String title,String content){
+    public void updatereview(Long id, String title, String content)
+    {
         Review review = reviewRepository.findById(id).get();
-        review.updateReview(title,content);
+        review.updateReview(title, content);
     }
-    public void deletereview(Long id){
+
+    public void deletereview(Long id)
+    {
         Review review = reviewRepository.findById(id).get();
         review.getMember().getReviewList().remove(review);
         review.getStation().getReviewList().remove(review);
         reviewRepository.delete(review);
 
     }
-    public List<ReviewDto> findmemberreview(Long memberid){
+
+    public List<ReviewDto> findmemberreview(Long memberid) {
         Member member = memberRepository.findById(memberid).get();
-        List<ReviewDto> reviewDtoList=new ArrayList<>();
-        for(Review r: member.getReviewList()){
-            reviewDtoList.add(new ReviewDto(r.getTitle(),r.getContent()));
+        List<ReviewDto> reviewDtoList = new ArrayList<>();
+        for (Review r : member.getReviewList()) {
+            reviewDtoList.add(new ReviewDto(r.getTitle(), r.getContent()));
         }
         return reviewDtoList;
     }
-    public List<ReviewDto> findstationreview(String CsId){
+
+    public List<ReviewDto> findstationreview(String CsId) {
         Station station = stationRepository.findStationByCsId(CsId).get();
-        List<ReviewDto> reviewDtoList=new ArrayList<>();
-        for(Review r: station.getReviewList()){
-            reviewDtoList.add(new ReviewDto(r.getTitle(),r.getContent()));
+        List<ReviewDto> reviewDtoList = new ArrayList<>();
+        for (Review r : station.getReviewList()) {
+            reviewDtoList.add(new ReviewDto(r.getTitle(), r.getContent()));
         }
         return reviewDtoList;
     }
+
 
     @Transactional(readOnly = true)
-    public StaionReviewAddResponseDto findStationReviewByCsId(String csId)
-    {
+    public StaionReviewAddResponseDto findStationReviewByCsId(String csId) {
         List<Review> reviewsByCsId = reviewRepository.findReviewsByCsId(csId);
-
         List<ReviewDto> reviewDtoList = reviewsByCsId.stream()
                 .map(ReviewDto::toReviewDto)
                 .collect(Collectors.toList());
 
         return new StaionReviewAddResponseDto(reviewDtoList);
-
     }
 
     @Transactional
-    public void addReview(StationReviewAddRequestDto requestDto)
-    {
+    public void addReview(StationReviewAddRequestDto requestDto) {
         String userNickName = AuthUtil.getCurUserNickName();
 
         Member member = memberRepository.findMemberByNickname(userNickName)
                 .orElseThrow(() -> new GlobalApiException(ErrorCode.NONE_USER));
 
         Station station = stationRepository.findStationByCsId(requestDto.getCsId())
-                .orElseThrow(()-> new GlobalApiException(ErrorCode.NONE_DATA));
+                .orElseThrow(() -> new GlobalApiException(ErrorCode.NONE_DATA));
 
         Review review = requestDto.toEntity();
         review.setStation(station);

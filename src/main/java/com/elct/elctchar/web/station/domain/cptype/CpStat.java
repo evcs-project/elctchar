@@ -2,9 +2,11 @@ package com.elct.elctchar.web.station.domain.cptype;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public enum CpStat {
     RE_CHARGEABLE("충전가능"),
     CHARGING("충전 중"),

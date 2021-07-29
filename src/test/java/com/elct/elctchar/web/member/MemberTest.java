@@ -1,5 +1,6 @@
 package com.elct.elctchar.web.member;
 
+import com.elct.elctchar.web.auth.AuthUtil;
 import com.elct.elctchar.web.exception.GlobalApiException;
 import com.elct.elctchar.web.member.domain.Member;
 import com.elct.elctchar.web.member.domain.MemberRepository;
@@ -9,11 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.junit.jupiter.api.Assertions;
-
 
 @SpringBootTest
 @Transactional
@@ -44,8 +44,7 @@ public class MemberTest {
     void equalPasswordErrorTest()
     {
         Member member = memberService.createMember("user1", "pwd1");
-        Assertions.assertThrows(GlobalApiException.class, () ->
-        {
+        Assertions.assertThrows(GlobalApiException.class, () -> {
             memberService.changePassword(member.getMemberId(), "pwd1");
         });
     }

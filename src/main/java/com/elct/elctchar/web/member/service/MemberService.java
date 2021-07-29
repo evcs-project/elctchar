@@ -67,6 +67,7 @@ public class MemberService {
     public void checkDuplicateMember(String nickName)
     {
         Optional<Member> memberByNickname = memberRepository.findMemberByNickname(nickName);
+
         if (memberByNickname.isPresent())
         {
             throw new GlobalApiException(ErrorCode.DUPLICATE_USER);
