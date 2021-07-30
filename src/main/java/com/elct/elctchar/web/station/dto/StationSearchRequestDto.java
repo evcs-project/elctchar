@@ -21,4 +21,8 @@ public class StationSearchRequestDto {
     @NotNull(message = "충전기 타입을 입력해주세요.")
     @ApiModelProperty(value = "충전기 타입")
     private ChargeTp chargeTp;
+
+    @NotNull(message = "검색유형을 입력해주세요")
+    @ApiModelProperty(value = "충전소 검색유형")
+    private StationSearchType stationSearchType;
 }

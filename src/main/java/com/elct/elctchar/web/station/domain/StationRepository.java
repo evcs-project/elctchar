@@ -14,4 +14,7 @@ public interface StationRepository extends JpaRepository<Station, Long> {
 
     @Query("select s from Charger c join c.station s where s.csNm like %:csNm% and c.chargeTp = :chargeTp")
     List<Station> findChargerBySearchReqeustDto(@Param("csNm") String csNm, @Param("chargeTp") ChargeTp chargeTp);
+
+    @Query("select s from Charger c join c.station s where s.addr like %:addr% and c.chargeTp = :chargeTp")
+    List<Station> findChargerByAddrReqeustDto(@Param("addr") String addr, @Param("chargeTp") ChargeTp chargeTp);
 }
