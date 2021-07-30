@@ -36,6 +36,7 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.6.1'
 
     implementation 'org.apache.commons:commons-lang3:3.10'

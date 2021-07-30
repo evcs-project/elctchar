@@ -1,7 +1,6 @@
 package com.elct.elctchar.web.controller;
 
-import com.elct.elctchar.web.review.dto.StaionReviewAddResponseDto;
-import com.elct.elctchar.web.review.dto.StationReviewAddRequestDto;
+import com.elct.elctchar.web.review.dto.*;
 import com.elct.elctchar.web.review.service.ReviewService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,11 +8,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/review")
 @Api(tags = "리뷰 관련 Api")
 @RequiredArgsConstructor
 public class ReviewController {
+
     private final ReviewService reviewService;
 
     @ApiOperation("특정 충전소의 리뷰 리스트 가져오기")
@@ -28,5 +30,26 @@ public class ReviewController {
     public void addReview(@RequestBody @Validated StationReviewAddRequestDto requestDto)
     {
         reviewService.addReview(requestDto);
+    }
+
+    @ApiOperation("리뷰 수정하기")
+    @PutMapping("/{reviewid}")
+    public void updateReview(@PathVariable(value = "reviewid") Long id, @RequestBody @Validated ReviewUpdateRequestDto reviewUpdateRequestDto)
+    {
+        reviewService.updatereview(id,reviewUpdateRequestDto);
+    }
+
+    @ApiOperation("리뷰 삭제하기")
+    @DeleteMapping("/{reviewId}")
+    public void deleteReview(@PathVariable(value = "reviewId") Long id)
+    {
+        reviewService.deletereview(id);
+    }
+
+    @ApiOperation("특정유저의 리뷰 리스트 가져오기")
+    @GetMapping("/myreview")
+    public MemberReviewResponseDto getMemberReview()
+    {
+        return reviewService.findmemberreview();
     }
 }
