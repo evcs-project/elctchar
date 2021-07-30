@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/review")
 @Api(tags = "리뷰 관련 Api")
@@ -36,20 +34,20 @@ public class ReviewController {
     @PutMapping("/{reviewid}")
     public void updateReview(@PathVariable(value = "reviewid") Long id, @RequestBody @Validated ReviewUpdateRequestDto reviewUpdateRequestDto)
     {
-        reviewService.updatereview(id,reviewUpdateRequestDto);
+        reviewService.updateReview(id,reviewUpdateRequestDto);
     }
 
     @ApiOperation("리뷰 삭제하기")
     @DeleteMapping("/{reviewId}")
     public void deleteReview(@PathVariable(value = "reviewId") Long id)
     {
-        reviewService.deletereview(id);
+        reviewService.deleteReview(id);
     }
 
     @ApiOperation("특정유저의 리뷰 리스트 가져오기")
     @GetMapping("/myreview")
     public MemberReviewResponseDto getMemberReview()
     {
-        return reviewService.findmemberreview();
+        return reviewService.findMemberReview();
     }
 }
