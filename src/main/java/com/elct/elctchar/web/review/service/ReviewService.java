@@ -33,12 +33,21 @@ public class ReviewService {
                 .orElseThrow(()->new GlobalApiException(ErrorCode.NONE_DATA));
         Member member = memberRepository.findMemberByNickname(nickName)
                 .orElseThrow(()->new GlobalApiException(ErrorCode.NONE_USER));
+    public Long createReview(String nickname, String CsId, String title, String content)
+    {
+        Station station = stationRepository.findStationByCsId(CsId).get();
+        Member member = memberRepository.findMemberByNickname(nickname).get();
         Review review = Review.creteReview(content, title);
         review.setStation(station);
         review.setMember(member);
         reviewRepository.save(review);
         return review.getReviewId();
     }
+
+    public void updatereview(Long id, String title, String content)
+    {
+        Review review = reviewRepository.findById(id).get();
+        review.updateReview(title, content);
    @Transactional
     public void updatereview(Long id,ReviewUpdateRequestDto dto)
    {
@@ -46,6 +55,10 @@ public class ReviewService {
                 .orElseThrow(()->new GlobalApiException(ErrorCode.NONE_DATA));
         review.updateReview(dto.getTitle(),dto.getContent());
     }
+
+    public void deletereview(Long id)
+    {
+        Review review = reviewRepository.findById(id).get();
     @Transactional
     public void deletereview(Long id)
     {
@@ -56,6 +69,26 @@ public class ReviewService {
         reviewRepository.delete(review);
 
     }
+
+    public List<ReviewDto> findmemberreview(Long memberid) {
+        Member member = memberRepository.findById(memberid).get();
+        List<ReviewDto> reviewDtoList = new ArrayList<>();
+        for (Review r : member.getReviewList()) {
+            reviewDtoList.add(new ReviewDto(r.getTitle(), r.getContent()));
+        }
+        return reviewDtoList;
+    }
+
+    public List<ReviewDto> findstationreview(String CsId) {
+        Station station = stationRepository.findStationByCsId(CsId).get();
+        List<ReviewDto> reviewDtoList = new ArrayList<>();
+        for (Review r : station.getReviewList()) {
+            reviewDtoList.add(new ReviewDto(r.getTitle(), r.getContent()));
+        }
+        return reviewDtoList;
+    }
+
+
     @Transactional(readOnly = true)
     public MemberReviewResponseDto findmemberreview()
     {
@@ -70,6 +103,7 @@ public class ReviewService {
 
     @Transactional(readOnly = true)
     public StaionReviewAddResponseDto findStationReviewByCsId(String csId) {
+    public StaionReviewAddResponseDto findStationReviewByCsId(String csId) {
         List<Review> reviewsByCsId = reviewRepository.findReviewsByCsId(csId);
         List<ReviewDto> reviewDtoList = reviewsByCsId.stream()
                 .map(ReviewDto::toReviewDto)
@@ -81,12 +115,15 @@ public class ReviewService {
     @Transactional
     public Long addReview(StationReviewAddRequestDto requestDto)
     {
+    public void addReview(StationReviewAddRequestDto requestDto) {
         String userNickName = AuthUtil.getCurUserNickName();
         Member member = memberRepository.findMemberByNickname(userNickName)
                 .orElseThrow(() -> new GlobalApiException(ErrorCode.NONE_USER));
 
         Station station = stationRepository.findStationByCsId(requestDto.getCsId())
                 .orElseThrow(() -> new GlobalApiException(ErrorCode.NONE_DATA));
+                .orElseThrow(() -> new GlobalApiException(ErrorCode.NONE_DATA));
+
         Review review = requestDto.toEntity();
         review.setStation(station);
         review.setMember(member);
