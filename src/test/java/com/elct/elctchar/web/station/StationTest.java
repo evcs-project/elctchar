@@ -11,8 +11,10 @@ import com.elct.elctchar.web.station.domain.ChargerRepository;
 import com.elct.elctchar.web.station.domain.Station;
 import com.elct.elctchar.web.station.domain.StationRepository;
 import com.elct.elctchar.web.station.domain.cptype.ChargeTp;
+import com.elct.elctchar.web.station.dto.StationInfoResponseDto;
 import com.elct.elctchar.web.station.dto.StationSearchRequestDto;
-import com.elct.elctchar.web.station.dto.StationSearchResponseDto;
+import com.elct.elctchar.web.station.dto.StationListSearchResponseDto;
+import com.elct.elctchar.web.station.dto.StationSearchType;
 import com.elct.elctchar.web.station.service.StationService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,17 +53,17 @@ public class StationTest {
     @BeforeEach
     void init()
     {
-        Station station = stationService.createStation(
-                testCsId, "TestAddr", "TestCsNm", 123.123, 123.123
-        );
-
-        Member member = memberService.createMember(testMem,"TestMemberPassword");
-
-        for (int i = 1; i <= 3; i++)
-        {
-            Charger charger = chargerRepository.save(new Charger());
-            charger.addStation(station);
-        }
+//        Station station = stationService.createStation(
+//                testCsId, "TestAddr", "TestCsNm", 123.123, 123.123
+//        );
+//
+//        Member member = memberService.createMember(testMem,"TestMemberPassword");
+//        memberRepository.save(member);
+//        for (int i = 1; i <= 3; i++)
+//        {
+//            Charger charger = chargerRepository.save(new Charger());
+//            charger.addStation(station);
+//        }
     }
 
     @Test
@@ -106,10 +108,18 @@ public class StationTest {
         StationSearchRequestDto requestDto = StationSearchRequestDto.builder()
                 .csNm("cs_nm")
                 .chargeTp(ChargeTp.STANDARD_CHARGE)
+                .stationSearchType(StationSearchType.SEARCH_BY_CSNM)
                 .build();
 
-        StationSearchResponseDto responseDto = stationService.searchStation(requestDto);
+        StationListSearchResponseDto responseDto = stationService.searchStation(requestDto);
 
         Assertions.assertThat(responseDto.getStationDtoList()).hasSize(2);
+    }
+
+    @Test
+    void searchStationReviewTest()
+    {
+        StationInfoResponseDto me000088 = stationService.getStationInfoByCsId("ME000088");
+        System.out.println(me000088);
     }
 }

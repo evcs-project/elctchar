@@ -1,6 +1,7 @@
 package com.elct.elctchar.web.member;
 
-import com.elct.elctchar.web.auth.AuthUtil;
+import com.elct.elctchar.web.auth.Authority;
+import com.elct.elctchar.web.auth.ROLETYPE;
 import com.elct.elctchar.web.exception.GlobalApiException;
 import com.elct.elctchar.web.member.domain.Member;
 import com.elct.elctchar.web.member.domain.MemberRepository;
@@ -10,10 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.junit.jupiter.api.Assertions;
+
+import java.util.Set;
+
 
 @SpringBootTest
 @Transactional
@@ -27,6 +30,16 @@ public class MemberTest {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Test
+    @DisplayName("회원가입시 USER ROLE 권한 자동생성")
+    void memberAuthorityTest()
+    {
+        Member member = memberService.createMember("newUser", "password");
+        Set<Authority> authorities = member.getAuthorities();
+        Assertions.assertEquals(1, authorities.size());
+        Assertions.assertTrue(authorities.contains(new Authority(ROLETYPE.USER.getName())));
+    }
 
     @Test
     @DisplayName("비밀번호 변경 성공 테스트")

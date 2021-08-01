@@ -28,14 +28,12 @@ public class MemberController {
         memberService.deleteMember(memberId);
     }
 
-    // TODO : 중복회원조회
     @GetMapping("/duplicate-check")
     public void checkDuplicateMember(@RequestParam(value="nickName") String nickName)
     {
         memberService.checkDuplicateMember(nickName);
     }
 
-    // TODO : 비밀변호 변경
     @PutMapping("/change-password")
     public void changePassword(@RequestParam(value="memberId") Long memberId,
                                @RequestParam(value="currentPassword") String currentPassword,

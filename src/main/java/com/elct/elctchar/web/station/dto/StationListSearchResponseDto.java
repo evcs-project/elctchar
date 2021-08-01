@@ -11,6 +11,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StationSearchResponseDto {
+public class StationListSearchResponseDto {
     private List<StationDto> stationDtoList;
 }

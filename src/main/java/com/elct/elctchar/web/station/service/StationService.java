@@ -2,20 +2,20 @@ package com.elct.elctchar.web.station.service;
 
 import com.elct.elctchar.web.exception.ErrorCode;
 import com.elct.elctchar.web.exception.GlobalApiException;
+import com.elct.elctchar.web.review.domain.Review;
+import com.elct.elctchar.web.station.domain.Charger;
 import com.elct.elctchar.web.station.domain.ChargerRepository;
 import com.elct.elctchar.web.station.domain.Station;
 import com.elct.elctchar.web.station.domain.StationRepository;
 import com.elct.elctchar.web.station.dto.StationDto;
+import com.elct.elctchar.web.station.dto.StationInfoResponseDto;
 import com.elct.elctchar.web.station.dto.StationSearchRequestDto;
-import com.elct.elctchar.web.station.dto.StationSearchResponseDto;
+import com.elct.elctchar.web.station.dto.StationListSearchResponseDto;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,7 +45,7 @@ public class StationService {
 
     // TODO : Query dsl 전환하여 충전기도 같이 포함처리 (메모리 관련)
     @Transactional(readOnly = true)
-    public StationSearchResponseDto searchStation(StationSearchRequestDto requestDto)
+    public StationListSearchResponseDto searchStation(StationSearchRequestDto requestDto)
     {
         List<Station> stations = new ArrayList<>();
         switch (requestDto.getStationSearchType())
@@ -70,6 +70,18 @@ public class StationService {
                 .distinct()
                 .collect(Collectors.toList());
 
-        return new StationSearchResponseDto(dtos);
+        return new StationListSearchResponseDto(dtos);
+    }
+
+    @Transactional(readOnly = true)
+    public StationInfoResponseDto getStationInfoByCsId(String csId)
+    {
+        Station station = stationRepository.findStationByCsId(csId)
+                .orElseThrow(()-> new GlobalApiException(ErrorCode.NONE_DATA));
+
+        List<Charger> chargerList = station.getChargerList();
+        List<Review> reviewList = station.getReviewList();
+
+        return new StationInfoResponseDto(station, chargerList, reviewList);
     }
 }

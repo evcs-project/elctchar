@@ -1,6 +1,7 @@
 package com.elct.elctchar.web.member.domain;
 
 import com.elct.elctchar.web.auth.Authority;
+import com.elct.elctchar.web.auth.ROLETYPE;
 import com.elct.elctchar.web.common.BaseEntity;
 import com.elct.elctchar.web.review.domain.Review;
 import lombok.AccessLevel;
@@ -12,6 +13,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -42,11 +44,13 @@ public class Member extends BaseEntity {
             name = "member_authority",
             joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
-    private Set<Authority> authorities;
+    private Set<Authority> authorities = new HashSet<>();
 
     public static Member newMember(String password, String nickname)
     {
-        return new Member(password, nickname);
+        Member member = new Member(password, nickname);
+        Authority.addRole(member, ROLETYPE.USER);
+        return member;
     }
 
     private Member(String password, String nickname)

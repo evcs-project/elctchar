@@ -38,6 +38,7 @@ public class MemberService {
         checkDuplicateMember(nickName);
         String encodedPassword = passwordEncoder.encode(password);
         Member member = Member.newMember(encodedPassword, nickName);
+
         return memberRepository.save(member);
     }
 
