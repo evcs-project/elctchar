@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@EqualsAndHashCode(of = {"cpId"})
 public class ChargerDto {
 
     private Long chargerId;

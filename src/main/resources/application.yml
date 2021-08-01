@@ -5,7 +5,6 @@ spring:
 ---
 
 spring:
-  profiles: local
   datasource:
     username: root
     password: root1234
@@ -21,6 +20,9 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update
+  config:
+    activate:
+      on-profile: local
 
 jwt:
   header: Authorization

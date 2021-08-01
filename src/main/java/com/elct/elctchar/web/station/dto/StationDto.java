@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode(of = "csId")
+@EqualsAndHashCode(of = {"csId", "chargerDtoList"})
 public class StationDto {
     private String csId;
     private String addr;
