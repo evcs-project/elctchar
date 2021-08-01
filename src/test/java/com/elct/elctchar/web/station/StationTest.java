@@ -53,17 +53,17 @@ public class StationTest {
     @BeforeEach
     void init()
     {
-//        Station station = stationService.createStation(
-//                testCsId, "TestAddr", "TestCsNm", 123.123, 123.123
-//        );
-//
-//        Member member = memberService.createMember(testMem,"TestMemberPassword");
-//        memberRepository.save(member);
-//        for (int i = 1; i <= 3; i++)
-//        {
-//            Charger charger = chargerRepository.save(new Charger());
-//            charger.addStation(station);
-//        }
+        Station station = stationService.createStation(
+                testCsId, "TestAddr", "TestCsNm", 123.123, 123.123
+        );
+
+        Member member = memberService.createMember(testMem,"TestMemberPassword");
+        memberRepository.save(member);
+        for (int i = 1; i <= 3; i++)
+        {
+            Charger charger = chargerRepository.save(new Charger());
+            charger.addStation(station);
+        }
     }
 
     @Test
