@@ -67,6 +67,18 @@ public class ReviewTest {
 //        }
     }
 
+    @Test
+    void initReview()
+    {
+        String csId = "ME000079";
+
+        Member member = Member.newMember("123", "user01");
+        memberRepository.save(member);
+        Review review = Review.creteReview("content1", "안녕하세요.");
+        reviewRepository.save(review);
+
+
+    }
 
     @Test
     @DisplayName("리뷰를 달면 member와 station의 Reviewlist에 Review가 추가되어야한다")
