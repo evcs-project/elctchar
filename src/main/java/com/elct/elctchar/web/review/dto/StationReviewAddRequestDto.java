@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -16,7 +17,7 @@ import javax.validation.constraints.NotNull;
 public class StationReviewAddRequestDto {
 
     @NotNull(message = "review 내용을 입력해주세요.")
-    private ReviewDto reviewDto;
+    private @Valid ReviewRequestDto reviewDto;
 
     @NotBlank(message = "csId (충전소 ID)를 입력해주세요.")
     private String csId;

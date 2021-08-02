@@ -4,8 +4,10 @@ import com.elct.elctchar.config.jwt.JwtAccessDeniedHandler;
 import com.elct.elctchar.config.jwt.JwtAuthenticationEntryPoint;
 import com.elct.elctchar.config.jwt.JwtSecurityConfig;
 import com.elct.elctchar.config.jwt.TokenProvider;
+import com.elct.elctchar.web.auth.CustomAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -34,9 +36,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     {
         return new BCryptPasswordEncoder();
     }
-
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        return new CustomAuthenticationProvider();
+    }
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+
         httpSecurity
                 .csrf()
                 .disable()
@@ -47,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // enable h2-console
                 .and()
+                .authenticationProvider(authenticationProvider())
                 .headers()
                 .frameOptions()
                 .sameOrigin()
@@ -64,6 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         ,"/error"
                         , "/**").permitAll()
                 .and()
+
                 .apply(new JwtSecurityConfig(tokenProvider));
     }
 }

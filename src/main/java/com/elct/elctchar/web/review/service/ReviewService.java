@@ -82,5 +82,5 @@ public class ReviewService {
         review.setMember(member);
         reviewRepository.save(review);
         return review.getReviewId();
-        }
     }
+}

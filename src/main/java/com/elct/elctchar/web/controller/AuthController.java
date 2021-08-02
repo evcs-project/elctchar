@@ -9,6 +9,7 @@ import com.elct.elctchar.web.member.domain.Member;
 import com.elct.elctchar.web.member.domain.MemberRepository;
 import com.elct.elctchar.web.member.dto.LoginDto;
 import com.elct.elctchar.web.member.dto.TokenDto;
+import com.elct.elctchar.web.member.service.MemberService;
 import io.swagger.annotations.Api;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 
 @CrossOrigin("*")
 @RestController
@@ -33,26 +32,26 @@ public class AuthController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final MemberRepository memberRepository;
-
+    private final MemberService memberService;
     public AuthController(
             TokenProvider tokenProvider
             , AuthenticationManagerBuilder authenticationManagerBuilder
-            , MemberRepository memberRepository) {
+            , MemberRepository memberRepository
+            , MemberService memberService) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.memberRepository = memberRepository;
+        this.memberService = memberService;
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<TokenDto> authorize(@Validated @RequestBody LoginDto loginDto) {
-        System.out.println(loginDto.getNickName());
-        System.out.println(loginDto.getPassword());
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getNickName(), loginDto.getPassword());
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.createToken(authentication);
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -67,8 +66,7 @@ public class AuthController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Member member = memberRepository.findMemberByNickname(userDetails.getUsername())
                 .orElseThrow(
-                        ()->  new GlobalApiException(ErrorCode.NONE_USER)
-                );
+                        ()->  new GlobalApiException(ErrorCode.NONE_USER));
         return new UserInfoResponseDto(member.getMemberId(), member.getNickname(), member.getAuthorities());
     }
 

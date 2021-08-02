@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/review")
@@ -26,7 +28,7 @@ public class ReviewController {
 
     @ApiOperation("리뷰 쓰기")
     @PostMapping
-    public void addReview(@RequestBody @Validated StationReviewAddRequestDto requestDto)
+    public void addReview(@RequestBody @Valid StationReviewAddRequestDto requestDto)
     {
         reviewService.addReview(requestDto);
     }
