@@ -42,7 +42,6 @@ public class MemberController {
         memberService.changePassword(memberId, newPassword);
     }
 
-    @GetMapping
     @PostMapping("/station")
     public void addStation(
             @RequestParam(value = "csId") String csId)
