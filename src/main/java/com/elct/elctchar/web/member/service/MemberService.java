@@ -1,5 +1,6 @@
 package com.elct.elctchar.web.member.service;
 
+import com.elct.elctchar.web.auth.AuthUtil;
 import com.elct.elctchar.web.exception.ErrorCode;
 import com.elct.elctchar.web.exception.GlobalApiException;
 import com.elct.elctchar.web.member.domain.Member;
@@ -76,9 +77,10 @@ public class MemberService {
     }
 
     @Transactional
-    public MyStation addStation(Long memberId, String csId)
+    public MyStation addStation(String csId)
     {
-        Member member = memberRepository.findById(memberId)
+        String userNickName = AuthUtil.getCurUserNickName();
+        Member member = memberRepository.findMemberByNickname(userNickName)
                 .orElseThrow(()-> new GlobalApiException(ErrorCode.NONE_USER));
 
         Station station = stationRepository.findStationByCsId(csId)

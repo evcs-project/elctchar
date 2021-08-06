@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ReviewDto {
 
+    private Long reviewId;
     private String title;
     private String content;
     private Long memberId;
@@ -30,6 +31,7 @@ public class ReviewDto {
         Member member = review.getMember();
 
         return ReviewDto.builder()
+                .reviewId(review.getReviewId())
                 .content(review.getContent())
                 .title(review.getTitle())
                 .nickName(member.getNickname())

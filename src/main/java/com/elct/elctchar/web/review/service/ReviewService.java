@@ -38,10 +38,16 @@ public class ReviewService {
     {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new GlobalApiException(ErrorCode.NONE_DATA));
-        review.getMember().getReviewList().remove(review);
-        review.getStation().getReviewList().remove(review);
-        reviewRepository.delete(review);
 
+        Member member = memberRepository.findMemberByNickname(AuthUtil.getCurUserNickName())
+                .orElseThrow(() -> new GlobalApiException(ErrorCode.NONE_USER));
+
+        if (!review.getMember().getMemberId().equals(member.getMemberId()))
+        {
+            throw new GlobalApiException("해당 권한이 없습니다.");
+        }
+
+        reviewRepository.delete(review);
     }
 
     @Transactional(readOnly = true)
@@ -71,11 +77,12 @@ public class ReviewService {
     public Long addReview(StationReviewAddRequestDto requestDto)
     {
         String userNickName = AuthUtil.getCurUserNickName();
+
         Member member = memberRepository.findMemberByNickname(userNickName)
                 .orElseThrow(() -> new GlobalApiException(ErrorCode.NONE_USER));
 
         Station station = stationRepository.findStationByCsId(requestDto.getCsId())
-                .orElseThrow(() -> new GlobalApiException(ErrorCode.NONE_DATA));
+                .orElseThrow(() -> new GlobalApiException("CsId : " + requestDto.getCsId() + "는 " +  ErrorCode.NONE_DATA.getName()));
 
         Review review = requestDto.toEntity();
         review.setStation(station);

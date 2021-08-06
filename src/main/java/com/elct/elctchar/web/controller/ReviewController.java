@@ -5,6 +5,7 @@ import com.elct.elctchar.web.review.service.ReviewService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,7 @@ public class ReviewController {
     }
 
     @ApiOperation("리뷰 삭제하기")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @DeleteMapping("/{reviewId}")
     public void deleteReview(@PathVariable(value = "reviewId") Long id)
     {

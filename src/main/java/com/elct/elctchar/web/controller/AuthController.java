@@ -32,16 +32,15 @@ public class AuthController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final MemberRepository memberRepository;
-    private final MemberService memberService;
+
     public AuthController(
             TokenProvider tokenProvider
             , AuthenticationManagerBuilder authenticationManagerBuilder
-            , MemberRepository memberRepository
-            , MemberService memberService) {
+            , MemberRepository memberRepository)
+    {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.memberRepository = memberRepository;
-        this.memberService = memberService;
     }
 
     @PostMapping("/authenticate")

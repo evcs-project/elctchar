@@ -44,9 +44,8 @@ public class MemberController {
 
     @PostMapping("/station")
     public void addStation(
-            @RequestParam(value = "memberId") Long memberId,
             @RequestParam(value = "csId") String csId)
     {
-        memberService.addStation(memberId, csId);
+        memberService.addStation(csId);
     }
 }
