@@ -42,9 +42,9 @@ public class MemberController {
         memberService.changePassword(memberId, newPassword);
     }
 
-    @PostMapping("/station")
+    @PostMapping("/station/{csId}")
     public void addStation(
-            @RequestParam(value = "csId") String csId)
+            @PathVariable(value = "csId") String csId)
     {
         memberService.addStation(csId);
     }
