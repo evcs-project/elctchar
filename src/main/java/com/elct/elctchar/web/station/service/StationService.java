@@ -103,4 +103,20 @@ public class StationService {
                 .collect(Collectors.toList());
 
     }
+
+    @Transactional
+    public void deleteMyStation(String csId)
+    {
+        Member member = memberRepository.findMemberByNickname(AuthUtil.getCurUserNickName())
+                .orElseThrow(()-> new GlobalApiException(ErrorCode.NONE_USER));
+
+        MyStation myStation = myStationRepository.findMyStationByMemberIdAndCsId(member.getMemberId(), csId);
+
+        if (myStation == null)
+        {
+            throw new GlobalApiException(ErrorCode.NONE_DATA);
+        }
+
+        myStationRepository.delete(myStation);
+    }
 }

@@ -43,4 +43,11 @@ public class StationController {
     {
         return stationService.getMyStation();
     }
+
+    @DeleteMapping("/mystation/{csId}")
+    public void deleteMyStation(@PathVariable(value = "csId") String csId)
+    {
+        stationService.deleteMyStation(csId);
+    }
+
 }
