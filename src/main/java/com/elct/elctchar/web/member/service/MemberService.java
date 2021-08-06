@@ -86,6 +86,14 @@ public class MemberService {
         Station station = stationRepository.findStationByCsId(csId)
                 .orElseThrow(()-> new GlobalApiException(ErrorCode.NONE_DATA));
 
+        MyStation myStationByMemberIdAndCsId =
+                myStationRepository.findMyStationByMemberIdAndCsId(member.getMemberId(), station.getCsId());
+
+        if (myStationByMemberIdAndCsId != null)
+        {
+            throw new GlobalApiException("이미 즐겨찾기 추가된 충전소입니다.");
+        }
+
         MyStation myStation = new MyStation();
         myStation.setMemberId(member);
         myStation.setCsId(station);
