@@ -6,7 +6,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +41,7 @@ public class ReviewController {
         reviewService.updateReview(id,reviewUpdateRequestDto);
     }
 
+    @Secured({"ADMIN"})
     @ApiOperation("리뷰 삭제하기")
     @DeleteMapping("/{reviewId}")
     public void deleteReview(@PathVariable(value = "reviewId") Long id)

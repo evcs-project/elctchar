@@ -1,5 +1,6 @@
 package com.elct.elctchar.web.station.domain;
 
+import com.elct.elctchar.web.mystation.domain.MyStation;
 import com.elct.elctchar.web.station.domain.cptype.ChargeTp;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,6 @@ public interface StationRepository extends JpaRepository<Station, Long> {
 
     @Query("select s from Charger c join c.station s where s.addr like %:addr% and c.chargeTp = :chargeTp")
     List<Station> findChargerByAddrReqeustDto(@Param("addr") String addr, @Param("chargeTp") ChargeTp chargeTp);
+
+
 }

@@ -19,9 +19,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     private final TokenProvider tokenProvider;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
     public SecurityConfig(
             TokenProvider tokenProvider,
             JwtAccessDeniedHandler jwtAccessDeniedHandler,
@@ -65,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers("/api/auth/authenticate").permitAll()
-                .antMatchers("/api/user/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/user/**").hasAnyRole("ROLE_ADMIN", "ROLE_USER")
                 .antMatchers(
                         "/h2-console/**"
                         ,"/favicon.ico"

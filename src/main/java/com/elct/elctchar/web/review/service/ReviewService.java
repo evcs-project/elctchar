@@ -11,6 +11,7 @@ import com.elct.elctchar.web.review.dto.*;
 import com.elct.elctchar.web.station.domain.Station;
 import com.elct.elctchar.web.station.domain.StationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +34,7 @@ public class ReviewService {
         review.updateReview(dto.getTitle(), dto.getContent());
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @Transactional
     public void deleteReview(Long id)
     {

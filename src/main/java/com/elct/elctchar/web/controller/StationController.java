@@ -1,5 +1,6 @@
 package com.elct.elctchar.web.controller;
 
+import com.elct.elctchar.web.station.dto.StationDto;
 import com.elct.elctchar.web.station.dto.StationInfoResponseDto;
 import com.elct.elctchar.web.station.dto.StationSearchRequestDto;
 import com.elct.elctchar.web.station.dto.StationListSearchResponseDto;
@@ -9,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @CrossOrigin("*")
@@ -33,5 +36,11 @@ public class StationController {
     public StationInfoResponseDto getStationInfoByCsId(@PathVariable(value = "csId") String csId)
     {
         return stationService.getStationInfoByCsId(csId);
+    }
+
+    @GetMapping("/mystation")
+    public List<StationDto> getMyStation()
+    {
+        return stationService.getMyStation();
     }
 }

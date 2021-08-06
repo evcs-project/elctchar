@@ -1,7 +1,12 @@
 package com.elct.elctchar.web.station.service;
 
+import com.elct.elctchar.web.auth.AuthUtil;
 import com.elct.elctchar.web.exception.ErrorCode;
 import com.elct.elctchar.web.exception.GlobalApiException;
+import com.elct.elctchar.web.member.domain.Member;
+import com.elct.elctchar.web.member.domain.MemberRepository;
+import com.elct.elctchar.web.mystation.domain.MyStation;
+import com.elct.elctchar.web.mystation.domain.MyStationRepository;
 import com.elct.elctchar.web.review.domain.Review;
 import com.elct.elctchar.web.station.domain.Charger;
 import com.elct.elctchar.web.station.domain.ChargerRepository;
@@ -26,8 +31,8 @@ public class StationService {
 
     private final StationRepository stationRepository;
     private final ChargerRepository chargerRepository;
-
-
+    private final MemberRepository memberRepository;
+    private final MyStationRepository myStationRepository;
 
     @Transactional
     public Station createStation(String csId, String addr, String csNm, Double lat, Double lng)
@@ -83,5 +88,19 @@ public class StationService {
         List<Review> reviewList = station.getReviewList();
 
         return new StationInfoResponseDto(station, chargerList, reviewList);
+    }
+
+    public List<StationDto> getMyStation()
+    {
+        System.out.println(AuthUtil.getCurUserNickName());
+        Member member = memberRepository.findMemberByNickname(AuthUtil.getCurUserNickName())
+                .orElseThrow(()-> new GlobalApiException(ErrorCode.NONE_USER));
+
+        List<MyStation> byMemberId = myStationRepository.findByMemberId(member.getMemberId());
+
+        return byMemberId.stream()
+                .map(s-> StationDto.toDto(s.getCsId()))
+                .collect(Collectors.toList());
+
     }
 }
