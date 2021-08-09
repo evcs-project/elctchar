@@ -1,42 +1,11 @@
-spring:
-  profiles:
-    active: local
 
----
-
-spring:
-  datasource:
-    username: root
-    password: root1234
-    url: jdbc:mysql://localhost:3306/elct?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  jpa:
-    generate-ddl: true
-    show-sql: true
-    database: MYSQL
-    properties:
-      hibernate:
-        format_sql: true
-    hibernate:
-      ddl-auto: update
-  config:
-    activate:
-      on-profile: local
-
-jwt:
-  header: Authorization
-  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
-  token-validity-in-seconds: 86400
-
----
 
 spring:
   profiles: live
   datasource:
-    username: back_master
-    password: springboook11
-    url: jdbc:mysql://rds-master.ciclmc7wjq3o.ap-northeast-2.rds.amazonaws.com:3306/elct
+    username: shopmaster
+    password: springbook11
+    url: jdbc:mysql://shop-book.ciclmc7wjq3o.ap-northeast-2.rds.amazonaws.com:3306/elct
     driver-class-name: org.mariadb.jdbc.Driver
 
   jpa:
@@ -47,7 +16,7 @@ spring:
       hibernate:
         format_sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
 
 jwt:
   header: Authorization
