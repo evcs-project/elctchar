@@ -37,6 +37,7 @@ jwt:
 ---
 
 spring:
+  profiles: live
   datasource:
     username: shopmaster
     password: springbook11
@@ -52,9 +53,6 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: create
-  config:
-    activate:
-      on-profile: live
 
 jwt:
   header: Authorization
